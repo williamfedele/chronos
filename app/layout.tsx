@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Rajdhani } from "next/font/google";
 import "./globals.css";
-import { Footer } from "@/components/footer";
 
 const rajdhani = Rajdhani({
   subsets: ["latin"],
@@ -24,7 +23,6 @@ export default function RootLayout({
         className={`${rajdhani.className} antialiased dark font-semibold min-h-screen `}
       >
         {children}
-        <Footer />
       </body>
     </html>
   );

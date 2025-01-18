@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        glow: ["0 0px 10px rgba(255,255, 255, 1.00)"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

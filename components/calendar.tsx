@@ -5,7 +5,7 @@ export const Calendar = () => {
   const [view, setView] = useState("day");
   return (
     <div className="space-y-4 w-full ">
-      <div className="space-x-4 border-b p-2">
+      <div className="space-x-4 p-2">
         <button
           className={`${view === "day" ? "text-foreground" : "text-accent"}`}
           onClick={() => setView("day")}
@@ -16,10 +16,10 @@ export const Calendar = () => {
           className={`${view === "month" ? "text-foreground" : "text-accent"}`}
           onClick={() => setView("month")}
         >
-          Month
+          Months
         </button>
       </div>
-      <div className="">
+      <div>
         {view === "day" && <DayView />}
         {view === "month" && <MonthView />}
       </div>
@@ -39,14 +39,14 @@ const DayView = () => {
   const currentDay = getCurrentDayOfYear();
 
   return (
-    <div className="w-full flex flex-wrap gap-4 justify-start">
+    <div className="flex flex-wrap gap-1">
       {[...Array(365)].map((_, index) => {
         const dayNumber = index + 1;
         return (
           <div
             key={index}
             className={`
-              w-1 h-1 rounded-full transition-colors
+              w-4 h-4 hover:bg-primary hover:drop-shadow-glow transition-colors transform-gpu
               ${
                 dayNumber === currentDay
                   ? "bg-foreground"

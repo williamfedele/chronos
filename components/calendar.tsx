@@ -12,7 +12,7 @@ const getCurrentDayOfYear = () => {
 export const Calendar = () => {
   const [view, setView] = useState("day");
 
-  const percentageOfYear = parseInt((getCurrentDayOfYear() / 365) * 100);
+  const percentageOfYear = Math.round((getCurrentDayOfYear() / 365) * 100);
 
   return (
     <div className="space-y-8 w-full">

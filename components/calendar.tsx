@@ -1,59 +1,62 @@
 "use client";
 import { useState } from "react";
 
+const getCurrentDayOfYear = () => {
+  const now = new Date();
+  const dayOne = new Date(now.getFullYear(), 0, 0);
+  const diff = now.getTime() - dayOne.getTime();
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  return Math.floor(diff / oneDayMs);
+};
+
 export const Calendar = () => {
   const [view, setView] = useState("day");
+
+  const percentageOfYear = parseInt((getCurrentDayOfYear() / 365) * 100);
+
   return (
-    <div className="space-y-4 w-full ">
-      <div className="space-x-4 p-2">
+    <div className="space-y-8 w-full">
+      <div className="text-2xl">
         <button
-          className={`${view === "day" ? "text-foreground" : "text-accent"}`}
+          className={`${view === "day" ? "text-primary" : "text-accent"} border-r pr-4`}
           onClick={() => setView("day")}
         >
           Days
         </button>
         <button
-          className={`${view === "month" ? "text-foreground" : "text-accent"}`}
+          className={`${view === "month" ? "text-primary" : "text-accent"} pl-4`}
           onClick={() => setView("month")}
         >
           Months
         </button>
       </div>
+      <hr></hr>
       <div>
         {view === "day" && <DayView />}
         {view === "month" && <MonthView />}
+      </div>
+      <hr></hr>
+      <div className="flex justify-between text-2xl text-primary">
+        <div>{new Date().getFullYear()}</div>
+        <div>{percentageOfYear}% COMPLETE</div>
       </div>
     </div>
   );
 };
 
 const DayView = () => {
-  const getCurrentDayOfYear = () => {
-    const now = new Date();
-    const dayOne = new Date(now.getFullYear(), 0, 0);
-    const diff = now.getTime() - dayOne.getTime();
-    const oneDayMs = 24 * 60 * 60 * 1000;
-    return Math.floor(diff / oneDayMs);
-  };
-
   const currentDay = getCurrentDayOfYear();
 
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex flex-wrap gap-3 justify-items-center">
       {[...Array(365)].map((_, index) => {
         const dayNumber = index + 1;
         return (
           <div
             key={index}
             className={`
-              w-4 h-4 hover:bg-primary hover:drop-shadow-glow transition-colors transform-gpu
-              ${
-                dayNumber === currentDay
-                  ? "bg-foreground"
-                  : dayNumber < currentDay
-                    ? "bg-primary-foreground"
-                    : "bg-accent"
-              }
+              w-2 h-2 rounded-full flex-none
+              ${dayNumber < currentDay ? "bg-primary-foreground" : "bg-primary"}
             `}
           />
         );
@@ -71,12 +74,18 @@ const MonthView = () => {
   const currentMonth = new Date().getMonth();
 
   return (
-    <div className="w-full flex flex-wrap gap-8 text-4xl">
+    <div className="w-full flex flex-wrap gap-8 text-2xl">
       {months.map((month, index) => {
         return (
           <div
             key={index}
-            className={`${index === currentMonth ? "text-foreground" : index < currentMonth ? "text-primary-foreground" : "text-accent"}`}
+            className={`
+              ${
+                index < currentMonth
+                  ? "text-primary-foreground"
+                  : "text-primary"
+              }
+            `}
           >
             {month}
           </div>

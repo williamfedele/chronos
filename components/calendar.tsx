@@ -12,23 +12,27 @@ const getCurrentDayOfYear = () => {
 export const Calendar = () => {
   const [view, setView] = useState("day");
 
-  const percentageOfYear = Math.round((getCurrentDayOfYear() / 365) * 100);
+  const currentDay = getCurrentDayOfYear();
+  const percentageOfYear = Math.round((currentDay / 365) * 100);
 
   return (
     <div className="space-y-8 w-full">
-      <div className="text-2xl">
-        <button
-          className={`${view === "day" ? "text-primary" : "text-accent"} border-r pr-4`}
-          onClick={() => setView("day")}
-        >
-          Days
-        </button>
-        <button
-          className={`${view === "month" ? "text-primary" : "text-accent"} pl-4`}
-          onClick={() => setView("month")}
-        >
-          Months
-        </button>
+      <div className="flex justify-between text-2xl">
+        <div>{new Date().getFullYear()}</div>
+        <div>
+          <button
+            className={`${view === "day" ? "text-primary" : "text-accent"} border-r pr-4`}
+            onClick={() => setView("day")}
+          >
+            Days
+          </button>
+          <button
+            className={`${view === "month" ? "text-primary" : "text-accent"} pl-4`}
+            onClick={() => setView("month")}
+          >
+            Months
+          </button>
+        </div>
       </div>
       <hr></hr>
       <div>
@@ -37,8 +41,8 @@ export const Calendar = () => {
       </div>
       <hr></hr>
       <div className="flex justify-between text-2xl text-primary">
-        <div>{new Date().getFullYear()}</div>
-        <div>{percentageOfYear}% COMPLETE</div>
+        <div className="uppercase">{365 - currentDay} days left</div>
+        <div className="uppercase">{percentageOfYear}% complete</div>
       </div>
     </div>
   );
